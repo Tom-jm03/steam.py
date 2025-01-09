@@ -135,9 +135,9 @@ class PartialUser(abc.PartialUser):
     __slots__ = ()
     _state: GCState
 
-    async def csgo_profile(self) -> ProfileInfo[Self]:
+    async def cs_profile(self) -> ProfileInfo[Self]:
         """Fetches this users CSGO profile info."""
-        msg = await self._state.fetch_user_csgo_profile(self.id)
+        msg = await self._state.fetch_user_cs_profile(self.id)
         if not msg.account_profiles:
             raise ValueError
         return ProfileInfo(self, msg.account_profiles[0])
@@ -184,7 +184,7 @@ class ClientUser(PartialUser, ClientUser_):  # type: ignore
         async def inventory(self, app: App, *, language: Language | None = None) -> Inventory[Item[Self], Self]:  # type: ignore
             ...
 
-    async def csgo_profile(self) -> ProfileInfo[Self]:
+    async def cs_profile(self) -> ProfileInfo[Self]:
         return ProfileInfo(self, self._profile_info_msg)
 
     @utils.todo
